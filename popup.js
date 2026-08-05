@@ -31,6 +31,16 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
 
                 response.issues.slice(0, 3).forEach((issue, index) => {
 
+                    // Format impact text
+                    const impact = issue.impact
+                        ? issue.impact.charAt(0).toUpperCase() + issue.impact.slice(1)
+                        : "Unknown";
+
+                    // Badge class
+                    const badgeClass = issue.impact
+                        ? issue.impact.toLowerCase()
+                        : "unknown";
+
                     issuesHTML += `
                         <div class="issue">
 
@@ -38,8 +48,37 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
                                 ${index + 1}. ${issue.help}
                             </div>
 
+                            <div style="margin:10px 0;">
+
+                                <strong>Impact:</strong>
+
+                                <span class="badge ${badgeClass}">
+                                    ${impact}
+                                </span>
+
+                                <br><br>
+
+                                <strong>Affected Elements:</strong>
+                                ${issue.nodes.length}
+
+                            </div>
+
                             <div class="issue-description">
                                 ${issue.description}
+                            </div>
+
+                            <div style="margin-top:12px;">
+
+                                <a href="${issue.helpUrl}"
+                                   target="_blank"
+                                   style="
+                                        text-decoration:none;
+                                        color:#2563eb;
+                                        font-weight:bold;
+                                   ">
+                                    📘 Learn More
+                                </a>
+
                             </div>
 
                         </div>
@@ -64,6 +103,7 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
                 `;
             }
 
+            // Update Popup UI
             document.getElementById("result").innerHTML = `
 
                 <h3>Accessibility Report</h3>
