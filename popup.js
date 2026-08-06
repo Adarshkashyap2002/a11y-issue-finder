@@ -29,7 +29,7 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
 
             if (response.issues && response.issues.length > 0) {
 
-                response.issues.slice(0, 3).forEach((issue, index) => {
+                response.issues.forEach((issue, index) => {
 
                     // Format impact text
                     const impact = issue.impact
@@ -116,9 +116,12 @@ document.getElementById("scanBtn").addEventListener("click", async () => {
 
                 <p>📋 <b>Inapplicable:</b> ${response.inapplicable}</p>
 
-                <hr>
+                
+               <hr>
 
-                <h4>Top 3 Issues</h4>
+                <h4>Accessibility Issues (${response.issues.length})</h4>
+
+                
 
                 ${issuesHTML}
 
