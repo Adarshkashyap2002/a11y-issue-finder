@@ -1,302 +1,245 @@
+const scanBtn = document.getElementById("scanBtn");
+const exportBtn = document.getElementById("exportBtn");
+const severityFilter = document.getElementById("severityFilter");
+const resultContainer = document.getElementById("result");
+
 let scanResults = null;
-document.getElementById("scanBtn").addEventListener("click", async () => {
-  // Get active tab
-  const [tab] = await chrome.tabs.query({
-    active: true,
-    currentWindow: true,
+
+const IMPACT_LEVELS = ["critical", "serious", "moderate", "minor"];
+
+function getCount(value) {
+  return Number.isFinite(Number(value)) ? Number(value) : 0;
+}
+
+function getImpactValue(issue) {
+  const impact = issue?.impact?.toLowerCase();
+  return IMPACT_LEVELS.includes(impact) ? impact : "unknown";
+}
+
+function isSafeHttpUrl(url) {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === "http:" || parsed.protocol === "https:";
+  } catch (error) {
+    return false;
+  }
+}
+
+function getSeverityCounts(issues) {
+  const counts = {
+    critical: 0,
+    serious: 0,
+    moderate: 0,
+    minor: 0,
+  };
+
+  issues.forEach((issue) => {
+    const impact = getImpactValue(issue);
+    if (impact in counts) {
+      counts[impact] += 1;
+    }
   });
 
-  // Send message to content script
-  chrome.tabs.sendMessage(
-    tab.id,
-    { action: "scan" },
+  return counts;
+}
 
-    (response) => {
-      scanResults = response;
+function createElement(tag, className, text) {
+  const element = document.createElement(tag);
+  if (className) {
+    element.className = className;
+  }
+  if (typeof text === "string") {
+    element.textContent = text;
+  }
+  return element;
+}
 
-      console.log("Response:", response);
+function appendSummaryCards(parent, response) {
+  const summaryGrid = createElement("div", "summary-grid");
+  const cards = [
+    ["violations", "❌", "Violations", getCount(response.violations)],
+    ["passes", "✅", "Passes", getCount(response.passes)],
+    ["incomplete", "⚠️", "Incomplete", getCount(response.incomplete)],
+    ["inapplicable", "📋", "Inapplicable", getCount(response.inapplicable)],
+  ];
 
-      console.log("Response:", response);
+  cards.forEach(([cardClass, icon, label, value]) => {
+    const card = createElement("div", `summary-card ${cardClass}`);
+    card.append(
+      createElement("div", "summary-icon", icon),
+      createElement("div", "summary-number", String(value)),
+      createElement("div", "summary-label", label),
+    );
+    summaryGrid.appendChild(card);
+  });
 
-      if (!response) {
-        document.getElementById("result").innerHTML = `
-                    <p style="color:red;">
-                        Failed to scan the current webpage.
-                    </p>
-                `;
+  parent.appendChild(summaryGrid);
+}
+
+function appendSeverityCards(parent, counts) {
+  const severityGrid = createElement("div", "severity-grid");
+  const cards = [
+    ["critical", "🔴", "Critical", counts.critical],
+    ["serious", "🟠", "Serious", counts.serious],
+    ["moderate", "🟡", "Moderate", counts.moderate],
+    ["minor", "🔵", "Minor", counts.minor],
+  ];
+
+  cards.forEach(([cardClass, icon, title, value]) => {
+    const card = createElement("div", `severity-card ${cardClass}`);
+    card.append(
+      document.createTextNode(icon),
+      createElement("div", "severity-count", String(value)),
+      createElement("div", "severity-title", title),
+    );
+    severityGrid.appendChild(card);
+  });
+
+  parent.appendChild(severityGrid);
+}
+
+function createIssueCard(issue, index) {
+  const impact = getImpactValue(issue);
+  const impactLabel = impact.charAt(0).toUpperCase() + impact.slice(1);
+  const issueTitle = issue?.help || "Accessibility issue";
+  const issueDescription = issue?.description || "No description provided.";
+  const affectedNodes = Array.isArray(issue?.nodes) ? issue.nodes.length : 0;
+
+  const issueCard = createElement("div", "issue");
+  issueCard.appendChild(createElement("div", "issue-title", `${index + 1}. ${issueTitle}`));
+
+  const details = createElement("div", "issue-meta");
+  details.appendChild(createElement("strong", null, "Impact:"));
+  details.appendChild(createElement("span", `badge ${impact}`, impactLabel));
+  details.appendChild(createElement("br"));
+  details.appendChild(createElement("br"));
+  details.appendChild(createElement("strong", null, "Affected Elements:"));
+  details.appendChild(document.createTextNode(` ${affectedNodes}`));
+  issueCard.appendChild(details);
+
+  issueCard.appendChild(createElement("div", "issue-description", issueDescription));
+
+  const learnMoreWrapper = createElement("div", "issue-learn-more");
+  const link = createElement("a", "learn-more-link", "📘 Learn More");
+  if (isSafeHttpUrl(issue?.helpUrl)) {
+    link.href = issue.helpUrl;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+  } else {
+    link.href = "#";
+    link.setAttribute("aria-disabled", "true");
+    link.tabIndex = -1;
+  }
+  learnMoreWrapper.appendChild(link);
+  issueCard.appendChild(learnMoreWrapper);
+
+  return issueCard;
+}
+
+function renderResults(response) {
+  const issues = Array.isArray(response.issues) ? response.issues : [];
+  const selectedSeverity = severityFilter.value;
+  const filteredIssues =
+    selectedSeverity === "all"
+      ? issues
+      : issues.filter((issue) => getImpactValue(issue) === selectedSeverity);
+
+  const counts = getSeverityCounts(issues);
+
+  resultContainer.replaceChildren();
+  resultContainer.appendChild(createElement("h3", null, "Accessibility Report"));
+  appendSummaryCards(resultContainer, response);
+  resultContainer.appendChild(createElement("h4", null, "Severity Breakdown"));
+  appendSeverityCards(resultContainer, counts);
+  resultContainer.appendChild(createElement("hr"));
+  resultContainer.appendChild(
+    createElement("h4", null, `Accessibility Issues (${filteredIssues.length})`),
+  );
+
+  if (filteredIssues.length === 0) {
+    const emptyCard = createElement("div", "issue");
+    emptyCard.append(
+      createElement("div", "issue-title", "🎉 No Accessibility Issues Found"),
+      createElement(
+        "div",
+        "issue-description",
+        "Great! This page passed all accessibility checks.",
+      ),
+    );
+    resultContainer.appendChild(emptyCard);
+    return;
+  }
+
+  filteredIssues.forEach((issue, index) => {
+    resultContainer.appendChild(createIssueCard(issue, index));
+  });
+}
+
+function renderError(message) {
+  resultContainer.replaceChildren();
+  resultContainer.appendChild(createElement("p", "error-text", message));
+}
+
+function sendScanMessage(tabId) {
+  return new Promise((resolve) => {
+    chrome.tabs.sendMessage(tabId, { action: "scan" }, (response) => {
+      if (chrome.runtime.lastError) {
+        resolve({ error: chrome.runtime.lastError.message });
         return;
       }
-
-      // Severity Counts
-      let criticalCount = 0;
-      let seriousCount = 0;
-      let moderateCount = 0;
-      let minorCount = 0;
-
-      response.issues.forEach((issue) => {
-        switch (issue.impact) {
-          case "critical":
-            criticalCount++;
-            break;
-
-          case "serious":
-            seriousCount++;
-            break;
-
-          case "moderate":
-            moderateCount++;
-            break;
-
-          case "minor":
-            minorCount++;
-            break;
-        }
-      });
-      // Build Top 3 Issues
-      let issuesHTML = "";
-      const selectedSeverity = document.getElementById("severityFilter").value;
-
-      const filteredIssues =
-        selectedSeverity === "all"
-          ? response.issues
-          : response.issues.filter(
-              (issue) =>
-                issue.impact && issue.impact.toLowerCase() === selectedSeverity,
-            );
-
-      if (filteredIssues.length > 0) {
-        filteredIssues.forEach((issue, index) => {
-          // Format impact text
-          const impact = issue.impact
-            ? issue.impact.charAt(0).toUpperCase() + issue.impact.slice(1)
-            : "Unknown";
-
-          // Badge class
-          const badgeClass = issue.impact
-            ? issue.impact.toLowerCase()
-            : "unknown";
-
-          issuesHTML += `
-                        <div class="issue">
-
-                            <div class="issue-title">
-                                ${index + 1}. ${issue.help}
-                            </div>
-
-                            <div style="margin:10px 0;">
-
-                                <strong>Impact:</strong>
-
-                                <span class="badge ${badgeClass}">
-                                    ${impact}
-                                </span>
-
-                                <br><br>
-
-                                <strong>Affected Elements:</strong>
-                                ${issue.nodes.length}
-
-                            </div>
-
-                            <div class="issue-description">
-                                ${issue.description}
-                            </div>
-
-                            <div style="margin-top:12px;">
-
-                                <a href="${issue.helpUrl}"
-                                   target="_blank"
-                                   style="
-                                        text-decoration:none;
-                                        color:#2563eb;
-                                        font-weight:bold;
-                                   ">
-                                    📘 Learn More
-                                </a>
-
-                            </div>
-
-                        </div>
-                    `;
-        });
-      } else {
-        issuesHTML = `
-                    <div class="issue">
-
-                        <div class="issue-title">
-                            🎉 No Accessibility Issues Found
-                        </div>
-
-                        <div class="issue-description">
-                            Great! This page passed all accessibility checks.
-                        </div>
-
-                    </div>
-                `;
-      }
-
-      // Update Popup UI
-      document.getElementById("result").innerHTML = `
-
-                <h3>Accessibility Report</h3>
-
-                <div class="summary-grid">
-
-    <div class="summary-card violations">
-
-        <div class="summary-icon">❌</div>
-
-        <div class="summary-number">
-            ${response.violations}
-        </div>
-
-        <div class="summary-label">
-            Violations
-        </div>
-
-    </div>
-
-    <div class="summary-card passes">
-
-        <div class="summary-icon">✅</div>
-
-        <div class="summary-number">
-            ${response.passes}
-        </div>
-
-        <div class="summary-label">
-            Passes
-        </div>
-
-    </div>
-
-   <div class="summary-card incomplete">
-        <div class="summary-icon">⚠️</div>
-
-        <div class="summary-number">
-            ${response.incomplete}
-        </div>
-
-        <div class="summary-label">
-            Incomplete
-        </div>
-
-    </div>
-
-   <div class="summary-card inapplicable">
-
-        <div class="summary-icon">📋</div>
-
-        <div class="summary-number">
-            ${response.inapplicable}
-        </div>
-
-        <div class="summary-label">
-            Inapplicable
-        </div>
-
-    </div>
-
-</div>
-           <h4>Severity Breakdown</h4>
-
-<div class="severity-grid">
-
-<div class="severity-card critical">
-
-🔴
-
-<div class="severity-count">
-
-${criticalCount}
-
-</div>
-
-<div class="severity-title">
-
-Critical
-
-</div>
-
-</div>
-
-<div class="severity-card serious">
-
-🟠
-
-<div class="severity-count">
-
-${seriousCount}
-
-</div>
-
-<div class="severity-title">
-
-Serious
-
-</div>
-
-</div>
-
-<div class="severity-card moderate">
-
-🟡
-
-<div class="severity-count">
-
-${moderateCount}
-
-</div>
-
-<div class="severity-title">
-
-Moderate
-
-</div>
-
-</div>
-
-<div class="severity-card minor">
-
-🔵
-
-<div class="severity-count">
-
-${minorCount}
-
-</div>
-
-<div class="severity-title">
-
-Minor
-
-</div>
-
-</div>
-
-</div>
-
-   
-</div>
-                
-               <hr>
-
-               <h4>Accessibility Issues (${filteredIssues.length})</h4>
-
-                
-
-                ${issuesHTML}
-
-            `;
-    },
-  );
+      resolve(response);
+    });
+  });
+}
+
+scanBtn.addEventListener("click", async () => {
+  try {
+    const [tab] = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    });
+
+    if (!tab?.id) {
+      renderError("No active tab available for scanning.");
+      return;
+    }
+
+    const response = await sendScanMessage(tab.id);
+
+    if (!response) {
+      renderError("Failed to scan the current webpage.");
+      return;
+    }
+
+    if (response.error) {
+      renderError(response.error);
+      return;
+    }
+
+    const issues = Array.isArray(response.issues) ? response.issues : [];
+
+    scanResults = {
+      ...response,
+      issues,
+      url: response.url || tab.url || "",
+      pageTitle: response.pageTitle || tab.title || "",
+    };
+
+    renderResults(scanResults);
+  } catch (error) {
+    renderError(error?.message || "Unexpected error while scanning.");
+  }
 });
 
-document.getElementById("severityFilter").addEventListener("change", () => {
-  document.getElementById("scanBtn").click();
+severityFilter.addEventListener("change", () => {
+  if (scanResults) {
+    renderResults(scanResults);
+    return;
+  }
+  scanBtn.click();
 });
 
-document.getElementById("exportBtn").addEventListener("click", () => {
+exportBtn.addEventListener("click", () => {
   if (!scanResults) {
     alert("Please scan a website first.");
 
@@ -305,7 +248,7 @@ document.getElementById("exportBtn").addEventListener("click", () => {
 
   // 👇 EVENT START
   const report = {
-    website: scanResults.url,
+    website: scanResults.url || "",
 
     scanTime: new Date().toLocaleString(),
 
@@ -319,7 +262,7 @@ document.getElementById("exportBtn").addEventListener("click", () => {
       inapplicable: scanResults.inapplicable,
     },
 
-    issues: scanResults.issues,
+    issues: Array.isArray(scanResults.issues) ? scanResults.issues : [],
   };
   const json = JSON.stringify(report, null, 4);
   const blob = new Blob([json], {
