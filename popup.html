@@ -27,40 +27,27 @@
         margin-bottom: 18px;
       }
 
-      #scanBtn {
+      #scanBtn,
+      #exportBtn {
         width: 100%;
         padding: 12px;
         border: none;
         border-radius: 8px;
-        background: #2563eb;
         color: white;
         font-size: 16px;
         font-weight: bold;
         cursor: pointer;
         transition: 0.25s;
       }
+
+      #scanBtn {
+        width: 100%;
+        background: #2563eb;
+      }
       #exportBtn {
         width: 100%;
-
-        padding: 12px;
-
         margin-top: 12px;
-
-        border: none;
-
-        border-radius: 8px;
-
         background: #16a34a;
-
-        color: white;
-
-        font-size: 16px;
-
-        font-weight: bold;
-
-        cursor: pointer;
-
-        transition: 0.25s;
       }
 
       #exportBtn:hover {
@@ -69,6 +56,14 @@
 
       #scanBtn:hover {
         background: #1d4ed8;
+      }
+
+      #scanBtn:focus-visible,
+      #exportBtn:focus-visible,
+      #severityFilter:focus-visible,
+      .learn-more-link:focus-visible {
+        outline: 3px solid #111827;
+        outline-offset: 2px;
       }
 
       #result {
@@ -118,6 +113,31 @@
         font-size: 14px;
         color: #555;
         line-height: 1.5;
+      }
+
+      .issue-meta {
+        margin: 10px 0;
+      }
+
+      .issue-learn-more {
+        margin-top: 12px;
+      }
+
+      .learn-more-link {
+        text-decoration: none;
+        color: #2563eb;
+        font-weight: bold;
+      }
+
+      .learn-more-link[aria-disabled="true"] {
+        color: #6b7280;
+        pointer-events: none;
+        text-decoration: line-through;
+      }
+
+      .error-text {
+        color: #b91c1c;
+        font-weight: 600;
       }
 
       .summary-grid {
@@ -364,21 +384,33 @@
       .severity-item.minor {
         border-left: 5px solid #2563eb;
       }
+
+      .filter-container {
+        margin: 15px 0;
+      }
+
+      .filter-label {
+        font-weight: 700;
+      }
+
+      #severityFilter {
+        width: 100%;
+        padding: 8px;
+        margin-top: 6px;
+        border-radius: 6px;
+      }
     </style>
   </head>
 
   <body>
     <h2>Website A11y Checker</h2>
 
-    <button id="scanBtn">Scan Website</button>
+    <button id="scanBtn" type="button">Scan Website</button>
 
-    <div style="margin: 15px 0">
-      <label><b>Filter Issues</b></label>
+    <div class="filter-container">
+      <label class="filter-label" for="severityFilter">Filter Issues</label>
 
-      <select
-        id="severityFilter"
-        style="width: 100%; padding: 8px; margin-top: 6px; border-radius: 6px"
-      >
+      <select id="severityFilter">
         <option value="all">All</option>
         <option value="critical">Critical</option>
         <option value="serious">Serious</option>
@@ -387,11 +419,11 @@
       </select>
     </div>
 
-    <div id="result">
+    <div id="result" role="status" aria-live="polite">
       Click <b>Scan Website</b> to analyze the current webpage.
     </div>
 
-    <button id="exportBtn">⬇ Export JSON</button>
+    <button id="exportBtn" type="button">⬇ Export JSON</button>
 
     <script src="popup.js"></script>
   </body>

@@ -1,4 +1,4 @@
-# Website A11y Checker
+# A11y Issue Finder (Website A11y Checker)
 
 A Chrome Extension that scans any webpage for accessibility issues using the **axe-core** accessibility engine.
 
@@ -13,10 +13,11 @@ A Chrome Extension that scans any webpage for accessibility issues using the **a
   - Passes
   - Incomplete checks
   - Inapplicable checks
-- Show the top accessibility issues
+- Show detected accessibility issues with severity and affected element counts
 - Filter issues by severity
 - Export scan results as JSON
 - Clean and responsive popup UI
+- Keyboard-accessible popup controls with visible focus states
 
 ---
 
@@ -68,8 +69,14 @@ A11Y-ISSUE-FINDER/
 This extension uses:
 
 - `activeTab` to scan the currently open page when you click the extension.
+- Content script matching on `<all_urls>` so axe-core can run on pages where extensions are allowed.
 
-The extension does not require background processing in its current form.
+The extension keeps permissions minimal:
+- no `host_permissions` entry
+- no `scripting` permission
+- no background processing requirement
+
+> Note: Chrome restricts extensions on internal pages like `chrome://*` and other protected URLs.
 
 ---
 
