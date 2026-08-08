@@ -11,9 +11,11 @@ A Chrome Extension that scans any webpage for accessibility issues using the **a
 - Display:
   - Violations
   - Passes
-  - Incomplete Checks
-  - Inapplicable Checks
-- Show Top 3 Accessibility Issues
+  - Incomplete checks
+  - Inapplicable checks
+- Show the top accessibility issues
+- Filter issues by severity
+- Export scan results as JSON
 - Clean and responsive popup UI
 
 ---
@@ -30,44 +32,53 @@ A Chrome Extension that scans any webpage for accessibility issues using the **a
 
 ## Project Structure
 
-```
+```text
 A11Y-ISSUE-FINDER/
-
-│── icons/
-│── lib/
+├── lib/
 │   └── axe.min.js
-│── manifest.json
-│── popup.html
-│── popup.js
-│── content.js
+├── manifest.json
+├── popup.html
+├── popup.js
+├── content.js
+└── README.md
 ```
 
 ---
 
 ## How to Run
 
-1. Download or Clone the repository.
+1. Download or clone the repository.
 2. Open Chrome.
 3. Go to:
 
-```
-chrome://extensions
-```
+   ```text
+   chrome://extensions
+   ```
 
-4. Enable **Developer Mode**.
-5. Click **Load Unpacked**.
+4. Enable **Developer mode**.
+5. Click **Load unpacked**.
 6. Select the project folder.
 7. Open any website.
 8. Click **Scan Website**.
 
 ---
 
+## Permissions
+
+This extension uses:
+
+- `activeTab` to scan the currently open page when you click the extension.
+
+The extension does not require background processing in its current form.
+
+---
+
 ## Current Progress
 
 ### Day 1
-- Chrome Extension setup
+- Chrome extension setup
 - Popup created
-- Content Script communication
+- Content script communication
 
 ### Day 2
 - Integrated axe-core
@@ -76,7 +87,7 @@ chrome://extensions
 ### Day 3
 - Popup UI improved
 - Accessibility summary displayed
-- Top 3 issues displayed
+- Top issues displayed
 - Tested on multiple websites
 - Stable MVP completed
 
@@ -84,11 +95,18 @@ chrome://extensions
 
 ## Future Improvements
 
-- Severity badges
+- Better severity badges
 - Affected elements count
-- Export report
-- Detailed accessibility report
+- More detailed accessibility report
 - Better UI/UX
+- Add screenshots and sample output to the README
+
+---
+
+## Notes
+
+- This project is a good MVP for learning and demo purposes.
+- Some accessibility results may vary depending on the website scanned.
 
 ---
 
