@@ -1,123 +1,188 @@
-# A11y Issue Finder (Website A11y Checker)
+# 🌐 Website A11y Checker
 
-A Chrome Extension that scans any webpage for accessibility issues using the **axe-core** accessibility engine.
+A Chrome Extension that scans webpages for accessibility issues using **axe-core** and provides a clear, user-friendly accessibility report.
 
----
-
-## Features
-
-- Scan the current webpage
-- Detect accessibility violations
-- Display:
-  - Violations
-  - Passes
-  - Incomplete checks
-  - Inapplicable checks
-- Show detected accessibility issues with severity and affected element counts
-- Filter issues by severity
-- Export scan results as JSON
-- Clean and responsive popup UI
-- Keyboard-accessible popup controls with visible focus states
+The extension helps identify accessibility violations, understand their severity, inspect affected elements, and export the complete scan report as JSON.
 
 ---
 
-## Tech Stack
+## 🚀 Features
 
-- HTML
-- CSS
-- JavaScript
-- Chrome Extension API
-- axe-core
+- 🔍 Scan the current webpage for accessibility issues
+- 📊 Accessibility summary dashboard
+- ❌ Violations count
+- ✅ Passes count
+- ⚠️ Incomplete checks count
+- 📋 Inapplicable checks count
+- 🎯 Severity-based filtering
+- 🔴 Critical, Serious, Moderate, and Minor impact classification
+- 📈 Severity Breakdown
+- 🧩 Display affected element count
+- 📖 "Learn More" links to axe-core documentation
+- 📥 Export complete accessibility reports as JSON
+- 🌐 Export the scanned website URL
+- 🕒 Include scan timestamp in exported reports
+- 📱 Clean and responsive popup UI
 
 ---
 
-## Project Structure
+## 🛠️ Tech Stack
+
+- **JavaScript**
+- **HTML5**
+- **CSS3**
+- **Chrome Extension APIs**
+- **axe-core**
+
+---
+
+## 🧠 How It Works
+
+The extension follows a simple workflow:
 
 ```text
-A11Y-ISSUE-FINDER/
-├── lib/
-│   └── axe.min.js
+User opens a webpage
+        ↓
+Clicks "Scan Website"
+        ↓
+Chrome Extension sends scan request
+        ↓
+axe-core analyzes the webpage
+        ↓
+Accessibility results are returned
+        ↓
+Results are displayed in the popup
+        ↓
+User can filter issues by severity
+        ↓
+User can inspect affected elements
+        ↓
+User can export the complete report as JSON
+
+
+📊 Accessibility Report
+
+The extension provides a summary of the accessibility scan:
+
+Metric	Description
+❌ Violations	Accessibility rules that failed
+✅ Passes	Rules that passed
+⚠️ Incomplete	Rules that require further manual review
+📋 Inapplicable	Rules that were not applicable to the page
+🎯 Severity Levels
+
+Detected accessibility issues are categorized based on their impact:
+
+🔴 Critical
+🟠 Serious
+🟡 Moderate
+🔵 Minor
+
+Users can filter the displayed issues using the severity filter.
+
+📋 Issue Details
+
+For each detected accessibility issue, the extension displays:
+
+Issue title
+Impact / severity
+Number of affected elements
+Description
+Link to the relevant axe-core documentation
+📥 JSON Export
+
+The extension allows users to export the complete accessibility scan as a JSON file.
+
+The exported report includes:
+
+Scanned website URL
+Scan timestamp
+Accessibility summary
+Detected accessibility issues
+Issue IDs
+Impact levels
+Descriptions
+Help information
+axe-core documentation links
+Affected nodes and related scan data
+
+Example:
+{
+  "website": "https://example.com",
+  "scanTime": "8/8/2026, 10:52:43 AM",
+  "summary": {
+    "violations": 7,
+    "passes": 25,
+    "incomplete": 0,
+    "inapplicable": 61
+  },
+  "issues": []
+}
+
+
+⚙️ Installation
+1. Clone the repository
+git clone https://github.com/Adarshkashyap2002/a11y-issue-finder.git
+2. Open Chrome Extensions
+
+Open:
+
+chrome://extensions
+3. Enable Developer Mode
+
+Turn on Developer mode.
+
+4. Load the Extension
+
+Click:
+
+Load unpacked
+
+Select the cloned project folder.
+
+5. Start Scanning
+
+Open any webpage, click the extension icon, and select:
+
+Scan Website
+📁 Project Structure
+a11y-issue-finder/
+│
 ├── manifest.json
 ├── popup.html
 ├── popup.js
 ├── content.js
-└── README.md
-```
+├── README.md
+└── ...
+🧪 Testing
 
----
+The extension has been tested on multiple websites to verify:
 
-## How to Run
+Accessibility scanning
+Issue detection
+Severity filtering
+Summary reporting
+Severity breakdown
+JSON export
+Documentation links
+Popup UI behavior
+🔮 Future Improvements
 
-1. Download or clone the repository.
-2. Open Chrome.
-3. Go to:
+Possible future enhancements include:
 
-   ```text
-   chrome://extensions
-   ```
+WCAG conformance level display (A / AA / AAA)
+PDF report generation
+Historical scan reports
+Accessibility trend visualization
+Additional report customization
+📌 Project Status
 
-4. Enable **Developer mode**.
-5. Click **Load unpacked**.
-6. Select the project folder.
-7. Open any website.
-8. Click **Scan Website**.
+Version: 1.0
 
----
+Status: Core accessibility scanning and reporting features implemented.
 
-## Permissions
+👨‍💻 Author
 
-This extension uses:
+Adarsh Kashyap
 
-- `activeTab` to scan the currently open page when you click the extension.
-- Content script matching on `<all_urls>` so axe-core can run on pages where extensions are allowed.
-
-The extension keeps permissions minimal:
-- no `host_permissions` entry
-- no `scripting` permission
-- no background processing requirement
-
-> Note: Chrome restricts extensions on internal pages like `chrome://*` and other protected URLs.
-
----
-
-## Current Progress
-
-### Day 1
-- Chrome extension setup
-- Popup created
-- Content script communication
-
-### Day 2
-- Integrated axe-core
-- Accessibility scan working
-
-### Day 3
-- Popup UI improved
-- Accessibility summary displayed
-- Top issues displayed
-- Tested on multiple websites
-- Stable MVP completed
-
----
-
-## Future Improvements
-
-- Better severity badges
-- Affected elements count
-- More detailed accessibility report
-- Better UI/UX
-- Add screenshots and sample output to the README
-
----
-
-## Notes
-
-- This project is a good MVP for learning and demo purposes.
-- Some accessibility results may vary depending on the website scanned.
-
----
-
-## Author
-
-Adarsh Priya Kashyap
-Software Engineer Intern
+Built as a Chrome Extension project focused on improving website accessibility testing and reporting.
