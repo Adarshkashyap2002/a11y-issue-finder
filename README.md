@@ -1,46 +1,34 @@
 <div align="center">
 
+<table>
+<tr>
+<td width="900">
+
+<div align="center">
+
 # 🌐 Website A11y Checker
 
 ### Accessibility Testing Chrome Extension
 
-Scan webpages, detect accessibility issues, understand their severity, inspect affected elements, and export complete accessibility reports using **axe-core**.
+Scan webpages, detect accessibility issues, understand severity, inspect affected elements, and export accessibility reports using **axe-core**.
 
 <br>
 
-![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?logo=googlechrome&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
-![axe-core](https://img.shields.io/badge/axe--core-4.x-6E56CF)
-![Version](https://img.shields.io/badge/Version-1.0.1-success)
+`Chrome Extension` &nbsp; `JavaScript` &nbsp; `axe-core` &nbsp; `Manifest V3`
 
 </div>
 
 ---
 
-## 🚀 What is Website A11y Checker?
+## 🚀 About
 
-<table>
-<tr>
-<td width="50%">
+**Website A11y Checker** is a Chrome Extension that helps developers identify and investigate accessibility issues directly from the browser.
 
-### 🎯 Purpose
-
-A lightweight Chrome Extension designed to help developers quickly identify and understand accessibility issues on webpages.
-
-</td>
-<td width="50%">
-
-### ⚡ Powered By
-
-**axe-core** performs the accessibility analysis and provides detailed rule violations, affected elements, WCAG information, and documentation links.
-
-</td>
-</tr>
-</table>
+It uses **axe-core** to analyze webpages and provides a structured report containing accessibility violations, severity, WCAG information, affected elements, remediation guidance, and exportable JSON data.
 
 ---
 
-## ✨ Key Features
+## ✨ Features
 
 <table>
 <tr>
@@ -48,40 +36,39 @@ A lightweight Chrome Extension designed to help developers quickly identify and 
 
 ### 🔍 Accessibility Scanning
 
-Scan the current webpage and detect accessibility violations using axe-core.
+Scan the current webpage using axe-core.
 
-### 📊 Accessibility Dashboard
+### 📊 Summary Dashboard
 
-View violations, passes, incomplete checks, and inapplicable checks.
+View Violations, Passes, Incomplete, and Inapplicable results.
 
 ### 🎯 Severity Filtering
 
-Filter detected issues by:
+Filter issues by Critical, Serious, Moderate, and Minor.
 
-🔴 Critical  
-🟠 Serious  
-🟡 Moderate  
-🔵 Minor
+### ♿ WCAG Information
+
+View WCAG criteria and conformance levels.
 
 </td>
 
 <td width="50%">
 
-### ♿ WCAG Information
+### 🧩 Affected Elements
 
-View WCAG criteria and conformance levels associated with detected issues.
+See the number of elements affected by each issue.
 
-### 🔦 Element Highlighting
+### 🔦 Highlight Element
 
-Highlight affected elements directly on the webpage.
+Locate the affected element directly on the webpage.
 
 ### 💡 How to Fix
 
-View remediation guidance for detected accessibility issues.
+View basic remediation guidance.
 
 ### 📥 JSON Export
 
-Export the complete accessibility scan report for further analysis or documentation.
+Export the complete accessibility scan report.
 
 </td>
 </tr>
@@ -89,7 +76,35 @@ Export the complete accessibility scan report for further analysis or documentat
 
 ---
 
-## 🖥️ Accessibility Report
+## 🧠 How It Works
+
+<pre>
+Open a webpage
+      ↓
+Click "Scan Website"
+      ↓
+Chrome Extension sends scan request
+      ↓
+axe-core analyzes the webpage
+      ↓
+Accessibility results are returned
+      ↓
+Results are displayed in the popup
+      ↓
+Filter issues by severity
+      ↓
+View WCAG information
+      ↓
+Highlight affected elements
+      ↓
+View remediation guidance
+      ↓
+Export complete report as JSON
+</pre>
+
+---
+
+## 📊 Accessibility Report
 
 <table>
 <tr>
@@ -100,6 +115,7 @@ Export the complete accessibility scan report for further analysis or documentat
 Accessibility rules that failed.
 
 </td>
+
 <td align="center">
 
 ### ✅ Passes
@@ -107,6 +123,7 @@ Accessibility rules that failed.
 Accessibility rules that passed.
 
 </td>
+
 <td align="center">
 
 ### ⚠️ Incomplete
@@ -114,6 +131,7 @@ Accessibility rules that passed.
 Rules requiring further review.
 
 </td>
+
 <td align="center">
 
 ### 📋 Inapplicable
@@ -124,86 +142,108 @@ Rules not applicable to the page.
 </tr>
 </table>
 
----
-
-## 🎯 Issue Analysis
-
-Every detected issue can provide:
+### Severity Levels
 
 <table>
 <tr>
-<td>
-
-**WCAG Criterion**
-
-Associated accessibility success criterion.
-
-</td>
-<td>
-
-**Conformance Level**
-
-A / AA / AAA when available.
-
-</td>
-<td>
-
-**Impact**
-
-Critical, Serious, Moderate, or Minor.
-
-</td>
-</tr>
-
-<tr>
-<td>
-
-**Affected Elements**
-
-Number of elements affected by the issue.
-
-</td>
-<td>
-
-**How to Fix**
-
-Basic remediation guidance.
-
-</td>
-<td>
-
-**Learn More**
-
-Link to the relevant axe-core documentation.
-
-</td>
+<td align="center">🔴<br><b>Critical</b></td>
+<td align="center">🟠<br><b>Serious</b></td>
+<td align="center">🟡<br><b>Moderate</b></td>
+<td align="center">🔵<br><b>Minor</b></td>
 </tr>
 </table>
 
+Issues can be filtered directly from the popup.
+
 ---
 
-## 🔦 Affected Element Highlighting
+## ♿ Accessibility Issue Details
 
-The extension can highlight the affected element directly on the webpage.
+Each detected issue can provide:
 
-This allows developers to quickly locate the problematic element instead of manually searching through the page source or DOM.
+<table>
+<tr>
+<td><b>WCAG Criterion</b></td>
+<td><b>Conformance Level</b></td>
+<td><b>Impact / Severity</b></td>
+</tr>
 
-```text
-Accessibility Issue
-        ↓
-Affected Element
-        ↓
-Highlight Element
-        ↓
-Element identified directly on webpage
+<tr>
+<td><b>Affected Elements</b></td>
+<td><b>How to Fix</b></td>
+<td><b>Learn More</b></td>
+</tr>
+</table>
 
-📥 JSON Report Export
+The workflow is:
 
-The complete accessibility report can be exported as a JSON file.
+**Detect → Understand → Locate → Fix → Export**
 
-Exported Data
-<table> <tr> <td>🌐 Website URL</td> <td>🕒 Scan Timestamp</td> </tr> <tr> <td>📊 Accessibility Summary</td> <td>⚠️ Detected Issues</td> </tr> <tr> <td>🏷️ Issue IDs & Impact</td> <td>♿ WCAG Information</td> </tr> <tr> <td>🔗 Documentation URLs</td> <td>🧩 Affected Nodes</td> </tr> </table>
-Example
+---
+
+## 🔦 Element Highlighting
+
+The extension can highlight affected elements directly on the webpage.
+
+This allows developers to quickly locate the problematic element instead of manually searching through the DOM.
+
+---
+
+## 💡 How to Fix
+
+Detected issues include basic remediation guidance to help developers understand how the accessibility problem can be addressed.
+
+Example:
+
+<pre>
+Issue:
+Elements must meet minimum color contrast ratio thresholds
+
+How to Fix:
+Increase the contrast between the foreground
+and background colors to meet the required
+WCAG contrast ratio.
+</pre>
+
+---
+
+## 📖 Learn More
+
+Each accessibility issue can include a direct link to the relevant **axe-core documentation** for additional technical information.
+
+---
+
+## 📥 JSON Export
+
+The complete accessibility scan can be exported as a structured JSON report.
+
+### Exported Information
+
+<table>
+<tr>
+<td>🌐 Website URL</td>
+<td>🕒 Scan Timestamp</td>
+</tr>
+
+<tr>
+<td>📊 Accessibility Summary</td>
+<td>⚠️ Detected Issues</td>
+</tr>
+
+<tr>
+<td>🏷️ Issue IDs & Impact</td>
+<td>♿ WCAG Information</td>
+</tr>
+
+<tr>
+<td>🔗 Documentation URLs</td>
+<td>🧩 Affected Nodes</td>
+</tr>
+</table>
+
+### Example
+
+<pre>
 {
   "website": "https://example.com",
   "scanTime": "8/8/2026, 10:52:43 AM",
@@ -215,53 +255,73 @@ Example
   },
   "issues": []
 }
-🛠️ Tech Stack
-<table> <tr> <td align="center"><b>JavaScript</b><br>Extension Logic</td> <td align="center"><b>HTML5</b><br>Popup Structure</td> <td align="center"><b>CSS3</b><br>User Interface</td> </tr> <tr> <td align="center"><b>Chrome APIs</b><br>Browser Integration</td> <td align="center"><b>axe-core</b><br>Accessibility Analysis</td> <td align="center"><b>Manifest V3</b><br>Extension Platform</td> </tr> </table>
+</pre>
 
+---
 
+## 🛠️ Tech Stack
 
-🔄 How It Works
+<table>
+<tr>
+<td align="center"><b>JavaScript</b><br>Extension Logic</td>
+<td align="center"><b>HTML5</b><br>Popup Structure</td>
+<td align="center"><b>CSS3</b><br>User Interface</td>
+</tr>
 
-┌───────────────────────────────┐
-│        Open Webpage           │
-└───────────────┬───────────────┘
-                ↓
-┌───────────────────────────────┐
-│       Click "Scan Website"    │
-└───────────────┬───────────────┘
-                ↓
-┌───────────────────────────────┐
-│       axe-core Analysis       │
-└───────────────┬───────────────┘
-                ↓
-┌───────────────────────────────┐
-│     Accessibility Results     │
-└───────────────┬───────────────┘
-                ↓
-┌───────────────────────────────┐
-│  Severity + WCAG Information  │
-└───────────────┬───────────────┘
-                ↓
-┌───────────────────────────────┐
-│ Highlight / Fix / Learn More  │
-└───────────────┬───────────────┘
-                ↓
-┌───────────────────────────────┐
-│        Export JSON Report     │
-└───────────────────────────────┘
+<tr>
+<td align="center"><b>Chrome Extension APIs</b><br>Browser Integration</td>
+<td align="center"><b>axe-core</b><br>Accessibility Analysis</td>
+<td align="center"><b>Manifest V3</b><br>Extension Platform</td>
+</tr>
+</table>
 
+---
 
-⚙️ Installation
-<table> <tr> <td><b>01</b></td> <td>Clone the repository</td> </tr> <tr> <td><b>02</b></td> <td>Open <code>chrome://extensions</code></td> </tr> <tr> <td><b>03</b></td> <td>Enable <b>Developer Mode</b></td> </tr> <tr> <td><b>04</b></td> <td>Click <b>Load unpacked</b></td> </tr> <tr> <td><b>05</b></td> <td>Select the cloned project folder</td> </tr> <tr> <td><b>06</b></td> <td>Open a webpage and click <b>Scan Website</b></td> </tr> </table>
+## ⚙️ Installation
 
+<table>
+<tr>
+<td><b>01</b></td>
+<td>Clone the repository</td>
+</tr>
 
+<tr>
+<td><b>02</b></td>
+<td>Open <code>chrome://extensions</code></td>
+</tr>
 
-Clone
+<tr>
+<td><b>03</b></td>
+<td>Enable <b>Developer Mode</b></td>
+</tr>
+
+<tr>
+<td><b>04</b></td>
+<td>Click <b>Load unpacked</b></td>
+</tr>
+
+<tr>
+<td><b>05</b></td>
+<td>Select the cloned project folder</td>
+</tr>
+
+<tr>
+<td><b>06</b></td>
+<td>Open a webpage and click <b>Scan Website</b></td>
+</tr>
+</table>
+
+### Clone Repository
+
+<pre>
 git clone https://github.com/Adarshkashyap2002/a11y-issue-finder.git
+</pre>
 
+---
 
+## 📁 Project Structure
 
-📁 Project Structure
+<pre>
 a11y-issue-finder/
 │
 ├── manifest.json
@@ -272,24 +332,89 @@ a11y-issue-finder/
 ├── lib/
 │   └── axe.min.js
 └── README.md
+</pre>
 
-🧪 Tested Features
-<table> <tr> <td>✅ Accessibility Scanning</td> <td>✅ Issue Detection</td> </tr> <tr> <td>✅ Severity Filtering</td> <td>✅ Severity Breakdown</td> </tr> <tr> <td>✅ WCAG Information</td> <td>✅ Element Highlighting</td> </tr> <tr> <td>✅ How to Fix Guidance</td> <td>✅ JSON Export</td> </tr> <tr> <td>✅ Documentation Links</td> <td>✅ Popup UI</td> </tr> </table>
-🔮 Future Improvements
-<table> <tr> <td>📄 PDF Reports</td> <td>📚 Scan History</td> </tr> <tr> <td>📈 Accessibility Trends</td> <td>🔄 Historical Comparison</td> </tr> <tr> <td>📊 Advanced Reporting</td> <td>🌐 Additional Standards</td> </tr> </table>
-📌 Project Status
+---
+
+## 🧪 Testing
+
+The extension has been tested on multiple websites for:
+
+<table>
+<tr>
+<td>✅ Accessibility Scanning</td>
+<td>✅ Issue Detection</td>
+<td>✅ Severity Filtering</td>
+</tr>
+
+<tr>
+<td>✅ Severity Breakdown</td>
+<td>✅ WCAG Information</td>
+<td>✅ Element Highlighting</td>
+</tr>
+
+<tr>
+<td>✅ How to Fix Guidance</td>
+<td>✅ JSON Export</td>
+<td>✅ Documentation Links</td>
+</tr>
+
+<tr>
+<td>✅ Popup UI</td>
+<td>✅ Report Generation</td>
+<td>✅ Error Handling</td>
+</tr>
+</table>
+
+---
+
+## 🔮 Future Improvements
+
+<table>
+<tr>
+<td>📄 PDF Reports</td>
+<td>📚 Scan History</td>
+</tr>
+
+<tr>
+<td>📈 Accessibility Trends</td>
+<td>🔄 Historical Comparison</td>
+</tr>
+
+<tr>
+<td>📊 Advanced Reporting</td>
+<td>🌐 Additional Standards</td>
+</tr>
+</table>
+
+---
+
+## 📌 Project Status
+
 <div align="center">
-🟢 Version 1.0.1
 
-Core accessibility scanning and reporting features implemented.
+### 🟢 Version 1.0.1
 
-The extension currently supports accessibility scanning, severity analysis, WCAG information, remediation guidance, affected-element highlighting, documentation links, and JSON report export.
+**Core accessibility scanning and reporting features implemented.**
+
+The current version supports accessibility scanning, severity analysis, WCAG information, remediation guidance, affected-element highlighting, documentation links, and JSON report export.
 
 </div>
-👨‍💻 Author
+
+---
+
+## 👨‍💻 Author
+
 <div align="center">
-Adarsh Kashyap
 
-Built as a Chrome Extension project focused on improving website accessibility testing and reporting.
+### Adarsh Kashyap
 
-</div> ```
+Built as a Chrome Extension focused on improving website accessibility testing and reporting.
+
+</div>
+
+</td>
+</tr>
+</table>
+
+</div>
