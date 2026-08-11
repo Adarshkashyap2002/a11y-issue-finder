@@ -400,6 +400,16 @@ The extension has been tested on multiple websites for:
 The current version supports accessibility scanning, severity analysis, WCAG information, remediation guidance, affected-element highlighting, documentation links, and JSON report export.
 
 </div>
+---
+
+## 📸 Preview
+
+<div align="center">
+
+<img src="./a11y-github-preview.jpg" alt="Website A11y Checker Preview" width="800">
+
+</div>
+
 
 ---
 
@@ -420,12 +430,3 @@ Built as a Chrome Extension focused on improving website accessibility testing a
 </div>
 ---
 
-## 📸 Preview
-
-<div align="center">
-
-<img src="./a11y-github-preview.jpg" alt="Website A11y Checker Preview" width="800">
-
-</div>
-
----
