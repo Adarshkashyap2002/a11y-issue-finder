@@ -418,3 +418,14 @@ Built as a Chrome Extension focused on improving website accessibility testing a
 </table>
 
 </div>
+---
+
+## 📸 Preview
+
+<div align="center">
+
+<img src="./a11y-github-preview.jpg" alt="Website A11y Checker Preview" width="800">
+
+</div>
+
+---
