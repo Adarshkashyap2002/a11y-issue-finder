@@ -58,58 +58,68 @@ User can filter issues by severity
 User can inspect affected elements
         ↓
 User can export the complete report as JSON
+```
 
+---
 
-
-
-
-📊 Accessibility Report
+## 📊 Accessibility Report
 
 The extension provides a summary of the accessibility scan:
 
-Metric	Description
-❌ Violations	Accessibility rules that failed
-✅ Passes	Rules that passed
-⚠️ Incomplete	Rules that require further manual review
-📋 Inapplicable	Rules that were not applicable to the page
-🎯 Severity Levels
+| Metric | Description |
+|---|---|
+| ❌ Violations | Accessibility rules that failed |
+| ✅ Passes | Rules that passed |
+| ⚠️ Incomplete | Rules that require further manual review |
+| 📋 Inapplicable | Rules that were not applicable to the page |
+
+---
+
+## 🎯 Severity Levels
 
 Detected accessibility issues are categorized based on their impact:
 
-🔴 Critical
-🟠 Serious
-🟡 Moderate
-🔵 Minor
+- 🔴 **Critical**
+- 🟠 **Serious**
+- 🟡 **Moderate**
+- 🔵 **Minor**
 
 Users can filter the displayed issues using the severity filter.
 
-📋 Issue Details
+---
+
+## 📋 Issue Details
 
 For each detected accessibility issue, the extension displays:
 
-Issue title
-Impact / severity
-Number of affected elements
-Description
-Link to the relevant axe-core documentation
-📥 JSON Export
+- Issue title
+- Impact / severity
+- Number of affected elements
+- Description
+- Link to the relevant axe-core documentation
+
+---
+
+## 📥 JSON Export
 
 The extension allows users to export the complete accessibility scan as a JSON file.
 
 The exported report includes:
 
-Scanned website URL
-Scan timestamp
-Accessibility summary
-Detected accessibility issues
-Issue IDs
-Impact levels
-Descriptions
-Help information
-axe-core documentation links
-Affected nodes and related scan data
+- Scanned website URL
+- Scan timestamp
+- Accessibility summary
+- Detected accessibility issues
+- Issue IDs
+- Impact levels
+- Descriptions
+- Help information
+- axe-core documentation links
+- Affected nodes and related scan data
 
-Example:
+### Example
+
+```json
 {
   "website": "https://example.com",
   "scanTime": "8/8/2026, 10:52:43 AM",
@@ -121,35 +131,53 @@ Example:
   },
   "issues": []
 }
+```
 
+---
 
+## ⚙️ Installation
 
-⚙️ Installation
-1. Clone the repository
+### 1. Clone the repository
+
+```bash
 git clone https://github.com/Adarshkashyap2002/a11y-issue-finder.git
-2. Open Chrome Extensions
+```
+
+### 2. Open Chrome Extensions
 
 Open:
 
+```text
 chrome://extensions
-3. Enable Developer Mode
+```
 
-Turn on Developer mode.
+### 3. Enable Developer Mode
 
-4. Load the Extension
+Turn on **Developer mode**.
+
+### 4. Load the Extension
 
 Click:
 
+```text
 Load unpacked
+```
 
 Select the cloned project folder.
 
-5. Start Scanning
+### 5. Start Scanning
 
 Open any webpage, click the extension icon, and select:
 
+```text
 Scan Website
-📁 Project Structure
+```
+
+---
+
+## 📁 Project Structure
+
+```text
 a11y-issue-finder/
 │
 ├── manifest.json
@@ -158,35 +186,47 @@ a11y-issue-finder/
 ├── content.js
 ├── README.md
 └── ...
-🧪 Testing
+```
+
+---
+
+## 🧪 Testing
 
 The extension has been tested on multiple websites to verify:
 
-Accessibility scanning
-Issue detection
-Severity filtering
-Summary reporting
-Severity breakdown
-JSON export
-Documentation links
-Popup UI behavior
-🔮 Future Improvements
+- Accessibility scanning
+- Issue detection
+- Severity filtering
+- Summary reporting
+- Severity breakdown
+- JSON export
+- Documentation links
+- Popup UI behavior
+
+---
+
+## 🔮 Future Improvements
 
 Possible future enhancements include:
 
-WCAG conformance level display (A / AA / AAA)
-PDF report generation
-Historical scan reports
-Accessibility trend visualization
-Additional report customization
-📌 Project Status
+- WCAG conformance level display (A / AA / AAA)
+- PDF report generation
+- Historical scan reports
+- Accessibility trend visualization
+- Additional report customization
 
-Version: 1.0
+---
 
-Status: Core accessibility scanning and reporting features implemented.
+## 📌 Project Status
 
-👨‍💻 Author
+**Version:** 1.0
 
-Adarsh Kashyap
+**Status:** Core accessibility scanning and reporting features implemented.
+
+---
+
+## 👨‍💻 Author
+
+**Adarsh Kashyap**
 
 Built as a Chrome Extension project focused on improving website accessibility testing and reporting.
