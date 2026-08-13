@@ -306,7 +306,7 @@ function createIssueCard(issue, index) {
     const previousButton = createElement(
       "button",
       "highlight-nav-btn",
-      "◀ Previous",
+      " Previous",
     );
 
     const counter = createElement(
@@ -315,7 +315,7 @@ function createIssueCard(issue, index) {
       `1 / ${issue.nodes.length}`,
     );
 
-    const nextButton = createElement("button", "highlight-nav-btn", "Next ▶");
+    const nextButton = createElement("button", "highlight-nav-btn", "Next ");
 
     previousButton.type = "button";
     nextButton.type = "button";

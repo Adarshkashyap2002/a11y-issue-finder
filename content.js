@@ -110,13 +110,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // SCROLL TO ELEMENT
     // =====================================================
 
-    element.scrollIntoView({
-      behavior: "smooth",
-
-      block: "center",
-
-      inline: "center",
-    });
+   element.scrollIntoView({
+    behavior: "smooth",
+    block: "center",
+    inline: "center"
+});
 
     // =====================================================
     // CREATE HIGHLIGHT STYLE

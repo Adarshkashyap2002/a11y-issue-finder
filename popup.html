@@ -14,9 +14,9 @@
 
       --text-heading: #f8fafc;
       --text-body: #dce3ee;
-      --text-muted: #94a3b8;
+     --text-muted: #a8b5c7;
 
-      --accent-primary: #6366f1;
+     --accent-primary: #5f61ea;
       --accent-primary-hover: #4f46e5;
       --accent-glow: rgb(99 102 241 / 35%);
       --accent-light: #a5b4fc;
@@ -51,16 +51,22 @@
     }
 
     body {
-      width: 390px;
-      min-height: 530px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      background-color: var(--bg-app);
-      background-image: radial-gradient(circle at 50% 0%, rgb(99 102 241 / 15%), transparent 70%);
-      color: var(--text-body);
-    }
+  width: 390px;
+  height: 600px;
+  min-height: 0;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow: hidden;
+  background-color: var(--bg-app);
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    rgb(99 102 241 / 15%),
+    transparent 70%
+  );
+  color: var(--text-body);
+}
 
     .header {
       display: flex;
@@ -177,19 +183,25 @@
       color: var(--text-heading);
     }
 
-    #result {
-      background: var(--card-glass);
-      border-radius: var(--radius-card);
-      padding: 16px;
-      border: 1px solid var(--card-border);
-      backdrop-filter: blur(16px);
-      max-height: 380px;
-      overflow-y: auto;
-      font-size: 13px;
-      color: var(--text-body);
-      scrollbar-width: thin;
-      scrollbar-color: rgb(255 255 255 / 15%) transparent;
-    }
+   #result {
+  flex: 1 1 auto;
+  min-height: 0;
+
+  background: var(--card-glass);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  border: 1px solid var(--card-border);
+  backdrop-filter: blur(16px);
+
+  overflow-y: auto;
+
+  font-size: 13px;
+  color: var(--text-body);
+
+  scrollbar-width: thin;
+  scrollbar-color: rgb(255 255 255 / 15%) transparent;
+}
+    
 
     h3,
     h4 {
@@ -506,7 +518,7 @@
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
         </svg>
       </div>
-      <h2>A11y Inspector</h2>
+      <h2>Website Inspector</h2>
     </div>
   </div>
 
